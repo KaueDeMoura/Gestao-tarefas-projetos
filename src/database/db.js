@@ -9,7 +9,7 @@ class Database {
         this.db = new Sequelize({
             database: 'final-backend',
             host: 'localhost',
-            password: "2558",
+            password: "--",
             username: 'root',
             dialect: 'mysql'
         })    
