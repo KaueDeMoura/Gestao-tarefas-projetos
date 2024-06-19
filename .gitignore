@@ -1,0 +1,38 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diretórios de dependências
+node_modules/
+jspm_packages/
+
+# Diretórios de construção
+dist/
+build/
+
+# Sistemas operacionais
+.DS_Store
+Thumbs.db
+
+# Ambiente
+.env
+
+# IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Test coverage
+coverage/
+
+# Temporários
+tmp/
+temp/
+*.swp
+
+# Outros
+*.bak
+*.tmp
