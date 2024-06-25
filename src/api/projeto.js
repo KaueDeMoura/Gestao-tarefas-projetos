@@ -2,25 +2,26 @@ const ProjetoController = require('../controller/projeto')
 
 class ProjetoApi {
     async createProjeto(req, res) {
-        const { nome, desc, dtCreate, autorID } = req.body
+        const { nome, descricao} = req.body
+        const id_usuario = req.cookies.userId;
 
         try {
-            const projeto = await ProjetoController.createProjeto(nome, desc, dtCreate, autorId)
+            const projeto = await ProjetoController.createProjeto(nome, descricao, id_usuario)
             return res.status(201).send(projeto)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao criar postagem ${e.message}`})
+            return res.status(400).send({ error: `Erro ao criar um projeto ${e.message}`})
         }
     }
 
     async updateProjeto(req, res) {
         const { id } = req.params
-        const { nome, desc, dtCreate, autorId } = req.body
-
+        const { nome, descricao} = req.body
+        const id_usuario = req.cookies.userId;
         try {
-            const projeto = await ProjetoController.update(Number(id), nome, desc, dtCreate, autorId)
+            const projeto = await ProjetoController.update(Number(id), nome, descricao, id_usuario)
             return res.status(200).send(projeto)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao alterar postagem ${e.message}`})
+            return res.status(400).send({ error: `Erro ao alterar o Projeto ${e.message}`})
         }
     }
 
@@ -31,7 +32,7 @@ class ProjetoApi {
             await ProjetoController.delete(Number(id))
             return res.status(204).send()
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao deletar postagem ${e.message}`})
+            return res.status(400).send({ error: `Erro ao deletar o Projeto  ${e.message}`})
         }
     }
 
@@ -40,7 +41,7 @@ class ProjetoApi {
             const projetos = await ProjetoController.find()
             return res.status(200).send(projetos)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao listar postagens ${e.message}`})
+            return res.status(400).send({ error: `Erro ao listar os Projetos  ${e.message}`})
         }
     }
 }

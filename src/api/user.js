@@ -48,8 +48,11 @@ class UserApi {
         const { email, senha } = req.body
 
         try {
-            const token = await UserController.login(email, senha)
-
+            const token = await UserController.login(email, senha,0)
+            const user_id = await UserController.login(email, senha,1)
+            
+            res.cookie('userId', user_id, { httpOnly: true, secure: true });
+            res.cookie('token', token, { httpOnly: true, secure: true });
             res.status(200).send({ token })
         } catch (e) {
             res.status(400).send({ error: e.message })
@@ -57,7 +60,8 @@ class UserApi {
     }
 
     async validateToken(req, res, next) {
-        const token = req.headers.authorization
+        //const token = req.headers.authorization
+        const token = req.cookies.token;
 
         try {
             await UserController.validateToken(token)
