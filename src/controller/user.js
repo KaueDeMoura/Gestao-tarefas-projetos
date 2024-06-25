@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const SECRET_KEY = 'segundaavaliacao'
 const SALT_VALUE = 10
 
+
 class UserController {
     async createUser(nome, email, senha) {
         if (nome === undefined || email === undefined || senha === undefined) {
@@ -66,6 +67,7 @@ class UserController {
     }
 
     async login(email, senha) {
+        
         if (email === undefined || senha === undefined) {
             throw new Error('Email e senha são obrigatórios.')
         }

@@ -2,19 +2,22 @@ const tarefa = require('../model/tarefa');
 const ProjetoController = require('./projeto');
 
 class TarefaController {
-    async createTarefa(titulo, desc, dtCreate, status, projetoID) {
-        if (titulo === undefined || desc === undefined || dtCreate === undefined || status === undefined || projetoID === undefined) {
-            throw new Error('Título, descrição, data de criação, status e projetoID são obrigatórios.');
+    async createTarefa(titulo, desc, dtCreate, status, projetoId) {
+        if (titulo === undefined || desc === undefined || dtCreate === undefined || status === undefined || projetoId === undefined) {
+            throw new Error('Título, descrição, data de criação, status e projetoId são obrigatórios.');
         }
 
-        await ProjetoController.findProjeto(Number(projetoID));
+        const projetoValue = await projeto.findByPk(projetoId);
+        if (!projetoValue) {
+            throw new Error('Projeto não encontrado.');
+        }
 
         const tarefaValue = await tarefa.create({
             titulo,
             desc,
             dtCreate,
             status,
-            projetoID
+            projetoId
         });
 
         return tarefaValue;
@@ -34,20 +37,20 @@ class TarefaController {
         return tarefaValue;
     }
 
-    async update(id, titulo, desc, dtCreate, status, projetoID) {
-        if (id === undefined || titulo === undefined || desc === undefined || dtCreate === undefined || status === undefined || projetoID === undefined) {
-            throw new Error('Id, título, descrição, data de criação, status e projetoID são obrigatórios.');
+    async update(id, titulo, desc, dtCreate, status, projetoId) {
+        if (id === undefined || titulo === undefined || desc === undefined || dtCreate === undefined || status === undefined || projetoId === undefined) {
+            throw new Error('Id, título, descrição, data de criação, status e projetoId são obrigatórios.');
         }
 
-        await ProjetoController.findProjeto(projetoID);
-
+        await ProjetoController.findProjeto(projetoId);
+        
         const tarefaValue = await this.findTarefa(id);
 
         tarefaValue.titulo = titulo;
         tarefaValue.desc = desc;
         tarefaValue.dtCreate = dtCreate;
         tarefaValue.status = status;
-        tarefaValue.projetoID = projetoID;
+        tarefaValue.projetoId = projetoId;
         await tarefaValue.save();
 
         return tarefaValue;

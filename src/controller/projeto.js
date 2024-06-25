@@ -18,7 +18,7 @@ class ProjetoController {
 
         return projetoValue;
     }
-
+////////////////
     async findProjeto(id) {
         if (id === undefined) {
             throw new Error('Id é obrigatório.')
@@ -38,17 +38,18 @@ class ProjetoController {
             throw new Error('Id, nome, descrição, data de criação e autorId são obrigatórios.');
         }
 
-        await UserController.findUser(autorId);
-
         const projetoValue = await this.findProjeto(id);
 
+        if(projetoValue.autorId === autorId) {
         projetoValue.nome = nome;
         projetoValue.desc = desc;
         projetoValue.dtCreate = dtCreate;
-        projetoValue.autorId = autorId;
-        await projetoValue.save();
-
-        return projetoValue;
+        projetoValue.save()
+        
+        return projetoValue
+        }else{
+            throw new Error('Usuario invalido.')
+        }
     }
 
     async delete(id) {
