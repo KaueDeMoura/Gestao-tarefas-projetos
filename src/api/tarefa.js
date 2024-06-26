@@ -1,47 +1,47 @@
-const TaskController = require('../controller/tarefa')
+const TarefaController = require('../controller/tarefa')
 const cookieParser = require('cookie-parser');
 
 class TarefaApi {
     
-    async createTask(req, res) {
+    async createTarefa(req, res) {
         const { titulo, descricao, id_projeto } = req.body
         try {
-            const task = await TaskController.createTask(titulo, descricao, id_projeto)
-            return res.status(201).send(task)
+            const tarefa = await TarefaController.createTarefa(titulo, descricao, id_projeto)
+            return res.status(201).send(tarefa)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao criar uma tárefa ${e.message}`})
+            return res.status(400).send({ error: `Erro ao criar uma tarefa ${e.message}`})
         }
     }
 
-    async updateTask(req, res) {
+    async updateTarefa(req, res) {
         const { id } = req.params
         const { titulo, descricao, status, id_projeto } = req.body
 
         try {
-            const task = await TaskController.update(Number(id), titulo, descricao, status, id_projeto)
-            return res.status(200).send(task)
+            const tarefa = await TarefaController.update(Number(id), titulo, descricao, status, id_projeto)
+            return res.status(200).send(tarefa)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao alterar tárefa ${e.message}`})
+            return res.status(400).send({ error: `Erro ao alterar tarefa ${e.message}`})
         }
     }
 
-    async deleteTask(req, res) {
+    async deleteTarefa(req, res) {
         const { id } = req.params
 
         try {
-            await TaskController.delete(Number(id))
+            await TarefaController.delete(Number(id))
             return res.status(204).send()
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao deletar tárefa ${e.message}`})
+            return res.status(400).send({ error: `Erro ao deletar tarefa ${e.message}`})
         }
     }
 
-    async findTasks(req, res) {
+    async findTarefas(req, res) {
         try {
-            const tasks = await TaskController.find()
+            const tasks = await TarefaController.find()
             return res.status(200).send(tasks)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao listar tárefa ${e.message}`})
+            return res.status(400).send({ error: `Erro ao listar tarefa ${e.message}`})
         }
     }
 
@@ -49,21 +49,21 @@ class TarefaApi {
         const cookie = req.headers.cookies;
 
         try {
-            TaskController.getCookie(cookie)
+            TarefaController.getCookie(cookie)
             next()
         } catch (e) {
             res.status(400).send({ error: e.message })
         }
     }
-    async filterTask(req, res){
+    async filterTarefa(req, res){
         const { id_projeto } = req.params;
         const { status } = req.query;
 
         try {
-            const task = await TaskController.filter(Number(id_projeto),status)
-            return res.status(200).send(task)
+            const tarefa = await TarefaController.filter(Number(id_projeto),status)
+            return res.status(200).send(tarefa)
         } catch (e) {
-            return res.status(400).send({ error: `Erro ao filtrar tárefa ${e.message}`})
+            return res.status(400).send({ error: `Erro ao filtrar tarefa ${e.message}`})
         }
     
     }
