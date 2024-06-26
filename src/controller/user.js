@@ -2,7 +2,7 @@ const user = require('../model/user')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-const SECRET_KEY = 'segundaavaliacao'
+const SECRET_KEY = 'final-backend'
 const SALT_VALUE = 10
 
 
