@@ -1,11 +1,13 @@
 const tarefa = require('../model/tarefa');
 const ProjetoController = require('./projeto');
+const projeto = require('../model/projeto');
 
 class TarefaController {
     async createTarefa(titulo, desc, dtCreate, status, projetoId) {
         if (titulo === undefined || desc === undefined || dtCreate === undefined || status === undefined || projetoId === undefined) {
             throw new Error('Título, descrição, data de criação, status e projetoId são obrigatórios.');
         }
+        
 
         const projetoValue = await projeto.findByPk(projetoId);
         if (!projetoValue) {

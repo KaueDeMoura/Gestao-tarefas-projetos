@@ -5,10 +5,14 @@ class Tarefa {
         this.model = database.db.define('tarefas', {
             id: {
                 type: database.db.Sequelize.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             },
             titulo: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.STRING,
+                validate: {
+                    len: [1, 55]
+                }
             },
             desc: {
                 type: database.db.Sequelize.STRING
