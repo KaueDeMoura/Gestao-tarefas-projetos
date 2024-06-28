@@ -6,10 +6,12 @@ const UserRouter = require('./routes/user');
 const ProjetoRouter = require('./routes/projeto');
 const TarefaRouter = require('./routes/tarefa'); // Adicionar a rota de tarefa
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 // Set use cors
 app.use(cors());

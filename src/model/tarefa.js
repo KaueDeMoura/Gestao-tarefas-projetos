@@ -19,7 +19,7 @@ class Tarefa {
             status: {
                 type: database.db.Sequelize.STRING
             },
-            projetoID: {
+            projetoId: {
                 type: database.db.Sequelize.INTEGER,
                 references: {
                     model: 'projetos',

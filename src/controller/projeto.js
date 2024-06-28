@@ -7,7 +7,7 @@ class ProjetoController {
             throw new Error('Nome, descrição, data de criação e autorId são obrigatórios.');
         }
 
-        await UserController.findUser(Number(autorId));
+
 
         const projetoValue = await projeto.create({
             nome,

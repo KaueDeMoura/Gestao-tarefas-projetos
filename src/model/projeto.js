@@ -5,7 +5,8 @@ class Projeto {
         this.model = database.db.define('projetos', {
             id: {
                 type: database.db.Sequelize.INTEGER,
-                primaryKey: true
+                primaryKey: true,
+                autoIncrement: true
             },
             nome: {
                 type: database.db.Sequelize.STRING

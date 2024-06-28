@@ -2,11 +2,12 @@ const ProjetoController = require('../controller/projeto')
 
 class ProjetoApi {
     async createProjeto(req, res) {
-        const { nome, descricao} = req.body
-        const id_usuario = req.cookies.userId;
+        const { nome, desc, dtCreate, autorId} = req.body
+    
+
 
         try {
-            const projeto = await ProjetoController.createProjeto(nome, descricao, id_usuario)
+            const projeto = await ProjetoController.createProjeto(nome, desc, dtCreate, autorId)
             return res.status(201).send(projeto)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao criar um projeto ${e.message}`})
@@ -14,11 +15,11 @@ class ProjetoApi {
     }
 
     async updateProjeto(req, res) {
-        const { id } = req.params
-        const { nome, descricao} = req.body
-        const id_usuario = req.cookies.userId;
+        //const { id } = req.params
+        const { id, nome, desc, dtCreate, autorId} = req.body
+
         try {
-            const projeto = await ProjetoController.update(Number(id), nome, descricao, id_usuario)
+            const projeto = await ProjetoController.update(id, nome, desc, dtCreate, autorId)
             return res.status(200).send(projeto)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao alterar o Projeto ${e.message}`})

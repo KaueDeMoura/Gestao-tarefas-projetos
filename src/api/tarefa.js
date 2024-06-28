@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 class TarefaApi {
     
     async createTarefa(req, res) {
-        const { titulo, descricao, id_projeto } = req.body
+        const { titulo, descricao, projetoID } = req.body
         try {
-            const tarefa = await TarefaController.createTarefa(titulo, descricao, id_projeto)
+            const tarefa = await TarefaController.createTarefa(titulo, descricao, projetoID)
             return res.status(201).send(tarefa)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao criar uma tarefa ${e.message}`})
@@ -15,10 +15,10 @@ class TarefaApi {
 
     async updateTarefa(req, res) {
         const { id } = req.params
-        const { titulo, descricao, status, id_projeto } = req.body
+        const { titulo, descricao, status, projetoID } = req.body
 
         try {
-            const tarefa = await TarefaController.update(Number(id), titulo, descricao, status, id_projeto)
+            const tarefa = await TarefaController.update(Number(id), titulo, descricao, status, projetoID)
             return res.status(200).send(tarefa)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao alterar tarefa ${e.message}`})
@@ -56,11 +56,11 @@ class TarefaApi {
         }
     }
     async filterTarefa(req, res){
-        const { id_projeto } = req.params;
+        const { projetoID } = req.params;
         const { status } = req.query;
 
         try {
-            const tarefa = await TarefaController.filter(Number(id_projeto),status)
+            const tarefa = await TarefaController.filter(Number(projetoID),status)
             return res.status(200).send(tarefa)
         } catch (e) {
             return res.status(400).send({ error: `Erro ao filtrar tarefa ${e.message}`})

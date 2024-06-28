@@ -47,7 +47,7 @@ class UserController {
         userValue.nome = nome
         userValue.email = email
         userValue.senha = await bcrypt.hash(senha, SALT_VALUE)
-        userValue.save()
+        await userValue.save()
 
         return userValue
     }
