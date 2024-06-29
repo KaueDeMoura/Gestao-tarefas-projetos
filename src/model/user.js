@@ -15,7 +15,7 @@ class User {
                 type: database.db.Sequelize.STRING
             },
             senha: {
-                type: database.db.Sequelize.STRING
+                type: database.db.Sequelize.STRING,
             },
             dtCreate: {
                 type: database.db.Sequelize.STRING
