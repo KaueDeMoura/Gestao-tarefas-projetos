@@ -3,6 +3,7 @@ const UserController = require('./user');
 
 class ProjetoController {
     async createProjeto(nome, desc, dtCreate, autorId) {
+        try {
         if (nome === undefined || desc === undefined || dtCreate === undefined || autorId === undefined) {
             throw new Error('Nome, descrição, data de criação e autorId são obrigatórios.');
         }
@@ -17,7 +18,10 @@ class ProjetoController {
         });
 
         return projetoValue;
+    } catch (error) {
+        console.log(error);
     }
+}
 ////////////////
     async findProjeto(id) {
         if (id === undefined) {
