@@ -54,7 +54,7 @@ describe("User", () => {
       expect(response.body).toHaveProperty("error");
       
       /*expect(response.body.nome).toBe("");
-      expect(response.body.email).toBe("teste@gmail.com");
+      //expect(response.body.email).toBe("teste@gmail.com");
       //
       const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
       expect(isPasswordValid).toBe(true);*/
