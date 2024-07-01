@@ -96,15 +96,16 @@ class UserController {
 
     async validateToken(token) {
         if (!token) {
-            throw new Error('Token inválido')
+            throw new Error('Token inválido: Token não fornecido.')
         }
-
+    
         try {
             await jwt.verify(token, SECRET_KEY)
-        } catch {
-            throw new Error('Token inválido')
+        } catch (error) {
+            throw new Error(`Token inválido: ${error.message}`)
         }
     }
+    
 } 
 
 module.exports = new UserController()
