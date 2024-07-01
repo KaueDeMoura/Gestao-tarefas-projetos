@@ -8,6 +8,7 @@ const SALT_VALUE = 10
 
 class UserController {
     async createUser(nome, email, senha) {
+        try{
         if (nome === undefined || email === undefined || senha === undefined) {
             throw new Error('Nome, email e senha são obrigatórios.')
         }
@@ -23,9 +24,12 @@ class UserController {
             email,
             senha: cypherSenha, 
         })
-
+        console.log(userValue.id, userValue.nome, userValue.email, userValue.senha);
         return userValue
+    } catch(error){
+        console.log(error)
     }
+}
 
     async findUser(id) {
         if (id === undefined) {

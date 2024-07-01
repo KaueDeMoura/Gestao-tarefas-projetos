@@ -48,8 +48,8 @@ class UserApi {
         const { email, senha } = req.body
 
         try {
-            const token = await UserController.login(email, senha,0)
-            const user_id = await UserController.login(email, senha,1)
+            const token = await UserController.login(email, senha, 0)
+            const user_id = await UserController.login(email, senha, 1)
             
             res.cookie('userId', user_id, { httpOnly: true, secure: true });
             res.cookie('token', token, { httpOnly: true, secure: true });

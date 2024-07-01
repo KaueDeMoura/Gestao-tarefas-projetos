@@ -9,10 +9,7 @@ class Projeto {
                 autoIncrement: true
             },
             nome: {
-                type: database.db.Sequelize.STRING,
-                validate: {
-                    len: [1, 55]
-                }
+                type: database.db.Sequelize.STRING
             },
             desc: {
                 type: database.db.Sequelize.STRING
