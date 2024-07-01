@@ -183,7 +183,7 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "start": "node C:/Users/Kauê/Desktop/avaliacao-final/src/index.js",
+    "start": "node ./src/index.js",
     "test": "jest --coverage"
   },
   "author": "Kauê Oenning de Moura",

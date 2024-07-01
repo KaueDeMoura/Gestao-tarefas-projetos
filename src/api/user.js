@@ -60,8 +60,8 @@ class UserApi {
     }
 
     async validateToken(req, res, next) {
-        //const token = req.headers.authorization
-        const token = req.cookies.token;
+        const token = req.headers.authorization
+        // const token = req.cookies.token;
 
         try {
             await UserController.validateToken(token)
