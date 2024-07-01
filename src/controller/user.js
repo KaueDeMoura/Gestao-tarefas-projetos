@@ -14,10 +14,14 @@ class UserController {
 
         const cypherSenha = await bcrypt.hash(senha, SALT_VALUE)
 
+        if (senha.trim() === '') {
+            throw new Error('A senha não pode ser nula.')
+        }
+
         const userValue = await user.create({
             nome,
             email,
-            senha: cypherSenha
+            senha: cypherSenha, 
         })
 
         return userValue

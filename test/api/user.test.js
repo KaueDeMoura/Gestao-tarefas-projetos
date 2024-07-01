@@ -1,5 +1,6 @@
 const app = require("../../src/index");
 const request = require("supertest");
+const bcrypt = require('bcrypt')
 
 describe("User", () => {
   
@@ -9,52 +10,74 @@ describe("User", () => {
         .send({
             nome: "UserTest", 
             email: "teste@gmail.com", 
-            senha: "123456"
+            senha: "1234567"
          });
   
       expect(response.statusCode).toBe(201);
       expect(response.body).toHaveProperty("id");
       expect(response.body.nome).toBe("UserTest");
       expect(response.body.email).toBe("teste@gmail.com");
-     // expect(response.body.senha).toBe("123456");
+      //
+      const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
+      expect(isPasswordValid).toBe(true);
+    })
+
+    it("POST USER sem nome", async () => {
+      const response = await request(app)
+        .post("/api/v1/user")
+        .send({
+            nome: "", 
+            email: "teste@gmail.com", 
+            senha: "1234567"
+         });
+  
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty("error");
+
+      /*expect(response.body.nome).toBe("");
+      expect(response.body.email).toBe("teste@gmail.com");
+      //
+      const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
+      expect(isPasswordValid).toBe(true);*/
+    })
+
+    it("POST USER sem Email", async () => {
+      const response = await request(app)
+        .post("/api/v1/user")
+        .send({
+            nome: "Usertest", 
+            email: "", 
+            senha: "1234567"
+         });
+  
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty("error");
+      
+      /*expect(response.body.nome).toBe("");
+      expect(response.body.email).toBe("teste@gmail.com");
+      //
+      const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
+      expect(isPasswordValid).toBe(true);*/
     })
 
 
+    it("POST USER sem Senha", async () => {
+      const response = await request(app)
+        .post("/api/v1/user")
+        .send({
+            nome: "Usertest", 
+            email: "teste@gmail.com", 
+            senha: ""
+         });
+  
+      expect(response.statusCode).toBe(400);
+      expect(response.body).toHaveProperty("error");
+      
+      /*expect(response.body.nome).toBe("");
+      expect(response.body.email).toBe("teste@gmail.com");
+      //
+      const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
+      expect(isPasswordValid).toBe(true);*/
+    })
 
-    /*it("GET USER", async () => {
-        const response = await request(app)
-          .get("/api/v1/user")
-    
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty("id");
-        expect(response.body.nome).toBe("UserTest");
-        expect(response.body.email).toBe("teste@gmail.com");
-       // expect(response.body.senha).toBe("123456");
-      })*/
-
-       it("POST USER sem nome", async () => {
-        const response = await request(app)
-          .post("/api/v1/user")
-          .send({
-              nome: "", 
-              email: "teste@gmail.com", 
-              senha: "123456"
-           });
-    
-        expect(response.statusCode).toBe(201);
-        expect(response.body.error).toBe(undefined);
-      })
-
-      it("POST USER sem nome", async () => {
-        const response = await request(app)
-          .post("/api/v1/user")
-          .send({
-              nome: "", 
-              email: "teste@gmail.com", 
-              senha: "123456"
-           });
-    
-        expect(response.statusCode).toBe(201);
-        expect(response.body.error).toBe(undefined);
-      })
 }); 
