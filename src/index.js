@@ -33,7 +33,7 @@ app.use('/api/v1/projeto', ProjetoRouter); // Corrigir para 'projeto' em vez de 
 app.use('/api/v1/tarefa', TarefaRouter); // Adicionar a rota de tarefa
 
 // Sincronizar banco de dados
-database.db.sync({ force: true })
+database.db.sync({ })
     .then(_ => {
         app.listen(8000, _ => {
             console.log('Server running on port 8000')

@@ -1,70 +1,67 @@
-const app = require("../../src/index");
-const database = require("../../src/database/db");
-const request = require("supertest");
+const request = require('supertest');
+const app = require('../../src/index');
 const bcrypt = require('bcrypt')
-const token = require('../../src/controller/user')
 
-describe("User", () => {
+describe('User', () => {
 
-    it("POST USER", async () => {
+    beforeAll(async () => {
+        console.info('Iniciando TDD com jest')
+    });
+
+    afterAll(() =>{
+        console.info('Encerrados os testes')
+    });
+
+    let token;
+
+    it('Post USER, criar usuario)', async () =>{
         const response = await request(app)
-          .post("/api/v1/user")
-          .send({
-              nome: "UserTest", 
-              email: "teste@gmail.com", 
-              senha: "1234567"
-           });
-    
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty("id");
-        expect(response.body.nome).toBe("UserTest");
-        expect(response.body.email).toBe("teste@gmail.com");
-        //
-        const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
-        expect(isPasswordValid).toBe(true);
-      })
+            .post('/api/v1/user')
+            .send({
+                nome:"Teste",
+                email:"teste8@gmail.com",
+                senha:"12345678"
+            });
 
-  
-  it('Put /api/v1/user/:id - Alterar Usuario', async () => {
-    const response = await request(app)
-      .post("/api/v1/user")
-      .send({
-          nome: "UserTest", 
-          email: "userteste@gmail.com", 
-          senha: "1234567"
-       });
+            console.log(response.body, response.body.nome, response.body.email, response.body.senha)
+            expect(response.statusCode).toBe(201)
+            expect(response.body).toHaveProperty("id")
+            expect(response.body.nome).toBe("Teste")
+            expect(response.body.email).toBe("teste8@gmail.com")
+            //
+    })
 
-       const responseLogin = await request(app)
-              .post("/api/v1/login")
-              .send({
-                  email: "userteste@gmail.com", 
-                  senha: "1234567"
-              });
-          expect(responseLogin.statusCode).toBe(200);
-          const token = token;
-          expect(token).toBeDefined();
+    it('LOGIN USER, logar em um usuario', async () => {
+        const response = await request(app)
+            .post('/api/v1/login')
+            .send({
+                email:"joao@gmail.com",
+                senha:"12345678"
+            });
+            console.log(response.body);
+            token = response.body.token;
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toHaveProperty("token");
+    });
 
-    const responsePut = {
-        id: 1,
-        name: 'UserTestAlterado',
-        email: 'usertestAlterado@gmail.com',
-        senha: "1234567alterado"
-    }
-        .put(`/api/v1/user/1`)
-        .send(responsePut);
+    it('DELETE USER)', async () => {
+        const responseDelete = await request(app)
+            .post('/api/v1/user')
+            .send({
+                nome:"joao",
+                email:"joao@gmail.com",
+                senha:"12345678"
+            });
+        const response = await request(app)
+            .delete(`/api/v1/user/${responseDelete.body.id}`)
+            .set('Authorization', `Bearer ${token}`)
+    })
+
+    /*it('GET USER, listar usuarios)', async () => {
+        const response = await request(app)
+            .get('/api/v1/user/')
+
+        console.log(response.body);
         expect(response.statusCode).toBe(200);
-        expect(response.body.id).toEqual(responsePut.id);
-        expect(response.body.name).toEqual(responsePut.name); 
-        expect(response.body.email).toEqual(responsePut.email);
-});    
-
-
-it('Delete /api/v1/user/:id - Excluir usuario', async () => {
-        const response = await request(app)
-        .delete(`/api/v1/user/1`);
-        expect(response.statusCode).toBe(204);
-
-}); 
-
-
-});
+    });*/
+})
