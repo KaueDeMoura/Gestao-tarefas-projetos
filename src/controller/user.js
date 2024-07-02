@@ -13,6 +13,11 @@ class UserController {
             throw new Error('Nome, email e senha são obrigatórios.')
         }
 
+        const EmailUsado = await user.findOne({ where: { email } })
+        if (EmailUsado) {
+            throw new Error('já existe uma conta com este email.')
+        }
+
         const cypherSenha = await bcrypt.hash(senha, SALT_VALUE)
 
         if (senha.trim() === '') {

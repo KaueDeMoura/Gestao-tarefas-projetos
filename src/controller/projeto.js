@@ -8,7 +8,9 @@ class ProjetoController {
             throw new Error('Nome, descrição, data de criação e autorId são obrigatórios.');
         }
 
-
+        if (nome.trim() === '') {
+            throw new Error('O nome do projeto não pode ser nulo ou vazio.');
+        }
 
         const projetoValue = await projeto.create({
             nome,
