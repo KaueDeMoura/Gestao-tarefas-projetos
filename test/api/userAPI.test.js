@@ -2,10 +2,11 @@ const app = require("../../src/index");
 const database = require("../../src/database/db");
 const request = require("supertest");
 const bcrypt = require('bcrypt')
+const token = require('../../src/controller/user')
 
 describe("User", () => {
 
-    /*it("POST USER", async () => {
+    it("POST USER", async () => {
         const response = await request(app)
           .post("/api/v1/user")
           .send({
@@ -21,7 +22,7 @@ describe("User", () => {
         //
         const isPasswordValid = await bcrypt.compare("1234567", response.body.senha);
         expect(isPasswordValid).toBe(true);
-      })*/
+      })
 
   
   it('Put /api/v1/user/:id - Alterar Usuario', async () => {
@@ -32,6 +33,16 @@ describe("User", () => {
           email: "userteste@gmail.com", 
           senha: "1234567"
        });
+
+       const responseLogin = await request(app)
+              .post("/api/v1/login")
+              .send({
+                  email: "userteste@gmail.com", 
+                  senha: "1234567"
+              });
+          expect(responseLogin.statusCode).toBe(200);
+          const token = token;
+          expect(token).toBeDefined();
 
     const responsePut = {
         id: 1,
